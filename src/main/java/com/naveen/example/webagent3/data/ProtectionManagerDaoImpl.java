@@ -1,5 +1,6 @@
 package com.naveen.example.webagent3.data;
 
+import org.apache.log4j.Logger;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -14,10 +15,13 @@ import com.naveen.example.webagent3.model.ProtectedPolicy;
 
 @Service
 public class ProtectionManagerDaoImpl implements ProtectionManagerDao {
-
+	
+	final static Logger logger = Logger.getLogger(ProtectionManagerDaoImpl.class);
+	
 	@Override
 	public ProtectedPolicy isProtected(String path) {
 		String endPointURL = "http://ssologin.naveen.com:8080/SSOLogin/isProtected";
+		logger.info("Calling SSO Policy server to check whther target resource is protected");
 		MultiValueMap<String, String> requestObject = new LinkedMultiValueMap<String, String>();
 		requestObject.add("path", path);
 		HttpHeaders headers = new HttpHeaders();

@@ -1,5 +1,6 @@
 package com.naveen.example.webagent3.data;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -18,9 +19,12 @@ import com.naveen.example.webagent3.model.AuthorizationDecision;
 public class AuthorizationManagerDaoImpl implements AuthorizationManagerDao {
 	@Autowired
 	AuthorizationDecision authorizationDecision;
-
+	
+	final static Logger logger = Logger.getLogger(AuthorizationManagerDaoImpl.class);
+	
 	@Override
 	public AuthorizationDecision isAuthorized(String path, String cookieName, String cookie) {
+		logger.info("Calling SSO Policy server to check Authorization");
 		String endPointURL = "http://ssologin.naveen.com:8080/SSOLogin/isAuthorized";
 		MultiValueMap<String, String> requestObject = new LinkedMultiValueMap<String, String>();
 		requestObject.add("path", path);
